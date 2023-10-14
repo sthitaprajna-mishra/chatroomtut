@@ -70,9 +70,12 @@ io.on("connection", (socket) => {
   console.log("New WS Connection...");
 
   // create room
-  socket.on("createRoom", () => {
+  socket.on("createRoom", (ownerName) => {
     // generate a unique room code
     const roomCode = generateUniqueRoomCode();
+
+    // add owner data to user list
+    users[socket.id] = ownerName;
 
     // create a new room with the owner (current socket)
     rooms[roomCode] = { owner: socket.id, members: [socket.id] };
@@ -80,8 +83,17 @@ io.on("connection", (socket) => {
     // join room as owner
     socket.join(roomCode);
 
+    // send roomCode + ownerName obj back
+    const result = {
+      roomCode: roomCode,
+      userData: {
+        userId: socket.id,
+        userName: users[socket.id],
+      },
+    };
+
     // Emit an event to the owner client to inform them about the room creation
-    socket.emit("roomCreated", roomCode);
+    socket.emit("roomCreated", result);
 
     console.log(rooms);
   });
