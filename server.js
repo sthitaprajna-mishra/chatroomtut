@@ -202,7 +202,12 @@ io.on("connection", (socket) => {
     handleRoomCleanup(socket.id);
 
     if (users[socket.id]) {
-      io.emit("roomLeft", socket.id, users[socket.id].userName);
+      io.emit(
+        "roomLeft",
+        socket.id,
+        users[socket.id].userName,
+        users[socket.id].memberRoom[0]
+      );
     }
 
     handleUserCleanup(socket.id);
