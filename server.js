@@ -182,7 +182,7 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     console.log(`${socket.id} has left the chat`);
     handleRoomCleanup(socket.id);
-    io.emit("message", "A user has left the chat");
+    io.emit("roomLeft", socket.id);
   });
 });
 
