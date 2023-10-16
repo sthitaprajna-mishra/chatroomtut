@@ -60,6 +60,9 @@ function handleRoomCleanup(socketId) {
     }
   });
 
+  console.log("rooms after removing member");
+  console.log(rooms);
+
   // if user was owner of any room, take action
   Object.entries(rooms).forEach(([key, value]) => {
     if (value["owner"] === socketId) {
@@ -68,7 +71,9 @@ function handleRoomCleanup(socketId) {
         value["owner"] = value["members"][0];
       }
       // if no users present, remove room
-      delete rooms[key];
+      else {
+        delete rooms[key];
+      }
     }
   });
 }
@@ -148,6 +153,7 @@ io.on("connection", (socket) => {
     const result = {
       roomCode: roomCodeInput,
       userList,
+      joineeName,
     };
 
     // join room as user
