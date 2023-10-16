@@ -159,25 +159,28 @@ io.on("connection", (socket) => {
     // join room as user
     socket.join(roomCodeInput);
 
-    // const roomSockets = allSockets[roomCodeInput];
-
-    // console.log("------ALL SOCKETS-----");
-    // console.log(allSockets);
-
-    // if (roomSockets) {
-    //   roomSockets.forEach((client) => {
-    //     client.emit("roomJoined", result);
-    //   });
-    // }
-
-    // emit an event to everyone in same room
-    // io.to(roomCodeInput).emit("roomJoined", result);
+    // send result to everyone
     io.emit("roomJoined", result);
+  });
 
-    // Emit an event to the owner client to inform them about the room creation
-    // socket.emit("roomJoined", result);
+  // message
+  socket.on("getMessage", (joineeName, senderRoomCode, message) => {
+    // if roomCode does not exist, return
+    if (!(senderRoomCode in rooms) || !joineeName) return;
 
-    // console.log(rooms);
+    console.log("inside message event");
+    console.log(users);
+    console.log(joineeName);
+
+    // send roomCode + userList back
+    const result = {
+      senderRoomCode,
+      message,
+      senderName: joineeName,
+    };
+
+    // send result to everyone
+    io.emit("sendMessage", result);
   });
 
   // welcome current user
@@ -191,6 +194,10 @@ io.on("connection", (socket) => {
     console.log(`${socket.id} has left the chat`);
 
     console.log("DISCONNECTED");
+
+    console.log("inside disconnect room event");
+    console.log(users);
+    console.log(socket.id);
 
     handleRoomCleanup(socket.id);
 
