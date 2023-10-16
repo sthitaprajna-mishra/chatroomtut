@@ -43,12 +43,14 @@ function generateUniqueRoomCode() {
   return roomCode;
 }
 
-function handleRoomCleanup(socketId) {
-  // remvoe user from list
+function handleUserCleanup(socketId) {
+  // remove user from list
   Object.entries(users).forEach(([key, value]) => {
     if (key === socketId) delete users[key];
   });
+}
 
+function handleRoomCleanup(socketId) {
   // remove user from all rooms
   Object.entries(rooms).forEach(([key, value]) => {
     if (value["members"].includes(socketId)) {
@@ -181,8 +183,16 @@ io.on("connection", (socket) => {
   // runs when client disconnects
   socket.on("disconnect", () => {
     console.log(`${socket.id} has left the chat`);
+
+    console.log("DISCONNECTED");
+
     handleRoomCleanup(socket.id);
-    io.emit("roomLeft", socket.id);
+
+    if (users[socket.id]) {
+      io.emit("roomLeft", socket.id, users[socket.id].userName);
+    }
+
+    handleUserCleanup(socket.id);
   });
 });
 
