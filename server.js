@@ -10,7 +10,7 @@ const io = socketio(server);
 // Enable CORS only for the specific origin (your React app's origin)
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://quickping.netlify.app/"],
+    origin: ["http://localhost:5173", "https://aquickchat.netlify.app/"],
   })
 );
 
