@@ -12,7 +12,6 @@ This repository holds the frontend code only. For the **client side code**, visi
 
 - [Overview](#overview)
   - [Description](#description)
-  - [Screenshot](#screenshot)
 - [My process](#my-process)
   - [Built with](#built-with)
   - [Insights](#insights)
@@ -32,19 +31,6 @@ Users will be able to -
 - Join multiple rooms at the same time
 - Perform all the above operations without signing up/logging in
 - View the optimal layout for the interface depending on their device's screen size
-
-### Screenshots -
-
-Below are some screenshots captured while using the live-deployed app.
-As a bonus treat for "The Office" fans, there is a delightful reimagination of how beloved characters from the show would have interacted within this virtual chatroom.
-
-#### Landing Page
-
-<img src="./public/screenshot1.png">
-
-#### Chatroom
-
-<img src="./public/screenshot2.png">
 
 ## My process
 
